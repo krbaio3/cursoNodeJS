@@ -1,12 +1,13 @@
-process.on('exit', (code) => {
-  console.log(`Exit with code:${code}`);
-});
+const buffer = Buffer.alloc(8);
+console.log(buffer);
 
-process.on('uncaughtException', (err) => {
-  console.error(err);
-  // Stuff
-  process.exit(1);
-});
+const buffer2 = Buffer.allocUnsafe(8);
+console.log(buffer2);
 
-process.stdin.resume();
-console.lemon();
+const string = 'avi\'on';
+// const buffer3 = Buffer.from(string);
+// console.log(buffer3.toString());
+
+const buffer3 = Buffer.from(string, 'ascii');
+console.log(string, string.toString(), string.length);
+console.log(buffer3, buffer3.toString(), buffer3.length);
