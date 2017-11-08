@@ -1,3 +1,11 @@
-const addon = require('addon');
+const os = require('os');
 
-console.log(addon.hello());
+console.log(`Host ${os.hostname}`);
+
+console.log(`15 min load average ${os.loadavg()}`);
+
+const toMb = (memory) => (
+  Math.round((memory / 1024 / 1024) * 100) / 100
+);
+
+console.log(`${toMb(os.freemem())} of ${toMb(os.totalmem())} Mb free`);
