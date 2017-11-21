@@ -1,7 +1,8 @@
-const retriever = require('./retriever');
+const Retriever = require('./retriever');
 
-retriever(10)
+const retriever = new Retriever(10);
 
+retriever
 .on('start',() => console.log('started'))
 .on('data',(data) => console.log(`data: ${data}`))
-.on('end',(data) => console.log(`end: ${data}`))
+.on('end',(data) => console.log(`end: ${data}`));

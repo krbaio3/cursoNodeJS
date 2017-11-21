@@ -1,9 +1,10 @@
 const EventEmitter = require('events').EventEmitter;
+const util = require('util');
 
 const deferredProcess = (triesCount, emitter) => {
   process.nextTick(() => {
     let count = 0;
-    emitter.emit('superNabo');
+    emitter.emit('start');
 
     const interval = setInterval(() => {
       emitter.emit('data', ++count);
@@ -13,12 +14,12 @@ const deferredProcess = (triesCount, emitter) => {
       }
     }, 300);
   });
-}
+};
 
-const retriever = (triesCount) => {
-  const emitter = new EventEmitter();
-  deferredProcess(triesCount, emitter);
-  return emitter;
-}
+const Retriever = function (triesCount) {
+  deferredProcess(triesCount, this);
+};
 
-module.exports= retriever
+util.inherits(Retriever, EventEmitter);
+
+module.exports = Retriever;
