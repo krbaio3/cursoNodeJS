@@ -17,4 +17,6 @@ const withLog =new WithLog();
 withLog.on('begin',() =>console.log('begin'));
 withLog.on('end',() =>console.log('end'));
 
-withLog.execute(() => console.log('executing'));
+withLog.execute(() => {
+setTimeout(() => console.log('executing'), 500);
+});
