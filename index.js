@@ -1,8 +1,20 @@
-const Retriever = require('./retriever');
+const EventEmitter = require('events').EventEmitter;
 
-const retriever = new Retriever(10);
+class WithLog extends EventEmitter {
 
-retriever
-.on('start',() => console.log('started'))
-.on('data',(data) => console.log(`data: ${data}`))
-.on('end',(data) => console.log(`end: ${data}`));
+  execute(taskFunc) {
+    console.log('Before');
+    this.emit('begin');
+    taskFunc();
+    this.emit('end');
+    console.log('after');
+  }
+}
+
+
+const withLog =new WithLog();
+
+withLog.on('begin',() =>console.log('begin'));
+withLog.on('end',() =>console.log('end'));
+
+withLog.execute(() => console.log('executing'));
