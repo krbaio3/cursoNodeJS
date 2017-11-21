@@ -1,27 +1,22 @@
 const fs = require('fs');
 
-const fileSize = (fileName, cb) => {
-  if (typeof fileName !== 'string') {
-    return process.nextTick(cb, new TypeError('args should be string'));
-  }
-
-  fs.stat(fileName, (err, stats) => {
-    if (err) return cb(err);
-    cb(null, stats.size);
-  })
+const readFileAsArray = (file, cb) => {
+  fs.readFile(file, (err, data) => {
+    if (err) {
+      return cb(err);
+    }
+    const lines = data.toString().trim().split('\n');
+    cb(null, lines);
+  });
 };
 
-fileSize(1, (err, size) => {
-  if (err) {
-    throw err;
+readFileAsArray('./numbers', (error, lines) => {
+  if(error){
+    console.error(error);
+    throw error;
   }
 
-  console.log(`Size in KB: ${size / 1024}`);
+  const number = lines.map(Number);
+  const oddNumber = number.filter((number) => number %2 ===1);
+  console.log(`Odd numbers count: ${oddNumber.length}`)
 });
-
-console.log('Hello');
-
-
-// si cambiamos los argumentosde fileSize,__filename => 1,
-// da error porque la funcion esta mal disenada porque funciona todo como una funcion sincrona en vez
-// de asincrona
