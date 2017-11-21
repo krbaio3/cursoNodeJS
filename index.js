@@ -1,7 +1,9 @@
 const {
   countOddPromise,
   countOddCallback,
+  countOddAsync,
 } = require ('./countOdd');
 
-countOddCallback();
-countOddPromise();
+countOddCallback('./numbers');
+countOddPromise('./numbers');
+countOddAsync('./numbers');

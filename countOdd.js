@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const readFileAsArray = (file, cb = () => { }) => {
+const readFileAsArray = (file, cb = () => {}) => {
   return new Promise((resolve, reject) => {
     fs.readFile(file, (error, data) => {
       if (error) {
@@ -16,7 +16,7 @@ const readFileAsArray = (file, cb = () => { }) => {
 };
 
 const countOddCallback = (file) => {
-  readFileAsArray('./numbers', (error, lines) => {
+  readFileAsArray(file, (error, lines) => {
     if (error) {
       throw error;
     }
@@ -28,7 +28,7 @@ const countOddCallback = (file) => {
 };
 
 const countOddPromise = (file) => {
-  readFileAsArray('./numbers')
+  readFileAsArray(file)
     .then((lines) => {
       const numbers = lines.map(Number);
       const oddNumbers = numbers.filter((number) => number % 2 === 1);
@@ -39,8 +39,19 @@ const countOddPromise = (file) => {
     });
 };
 
+const countOddAsync = async(file) => {
+  try {
+    const lines = await readFileAsArray(file);
+    const numbers = lines.map(Number);
+    const oddNumbers = numbers.filter((number) => number % 2 === 1);
+    console.log(`Odd numbers count: ${oddNumbers.length}`);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   countOddCallback,
   countOddPromise,
+  countOddAsync,
 }
-
