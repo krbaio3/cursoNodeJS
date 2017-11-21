@@ -4,7 +4,8 @@
   "description": "curso de nodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,11 @@
   },
   "homepage": "https://github.com/krbaio3/cursoNodeJS#readme",
   "dependencies": {
-    "@types/node": "^8.0.50",
-    "request": "^2.83.0"
+    "@types/node": "^8.0.50"
   },
   "devDependencies": {
-    "eslint": "^4.10.0"
+    "eslint": "^4.10.0",
+    "nodemon": "^1.12.1",
+    "request": "^2.83.0"
   }
 }

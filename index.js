@@ -1,14 +1,20 @@
-const slowAdd = (a, b) => {
-  for (let index = 0; index < 999999999; index++) {}
-  return a + b;
-}
+const fs = require('fs');
 
-const a= slowAdd (6,9);
-const b = slowAdd (1,42);
-const c = slowAdd (23,42);
-const d = slowAdd (5,9);
+fs.readFile(__filename, () => {
+  setTimeout(() => {
+    console.log('timeOut');
+  }, 0);
 
-console.log(a);
-console.log(b);
-console.log(c);
-console.log(d);
+  setImmediate(() => {
+    console.log('inmediate');
+  });
+});
+
+
+// setTimeout(() => {
+//   console.log('timeOut');
+// }, 0);
+
+// setImmediate(() => {
+//   console.log('inmediate');
+// });
