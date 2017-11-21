@@ -16,10 +16,9 @@ const deferredProcess = (triesCount, emitter) => {
   });
 };
 
-const Retriever = function (triesCount) {
-  deferredProcess(triesCount, this);
+module.exports = class Retriever extends EventEmitter {
+  constructor(triesCount) {
+    super();
+    deferredProcess(triesCount, this);
+  }
 };
-
-util.inherits(Retriever, EventEmitter);
-
-module.exports = Retriever;
