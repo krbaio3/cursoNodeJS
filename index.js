@@ -1,18 +1,21 @@
-const server = require('http').createServer();
-
-server.on('request', (req, res) => {
-  res.writeHead(200, {
-    'Content-Type': 'text/plain'
+const http = require('http');
+let count = 0;
+const req = http.request({
+  hostname: 'www.elmundo.com'
+}, (res) => {
+  // console.log(`Status code: ${res.statusCode}`);
+  // console.log(res.headers);
+  res.on('data', (data) => {
+    count += 1;
+    // console.log(data.toString());
+    console.log(count)
   });
-  res.write('Hello word\n');
-
-  setTimeout(() => {
-    res.write('Another hello\n');
-  }, 1000);
-
-  setTimeout(() => {
-    res.write('super nabo\n');
-  },2000);
 });
 
-server.listen(3000);
+req.on('error', (error) => {
+  console.error(error);
+});
+
+// console.log(req.agent);
+
+req.end();
