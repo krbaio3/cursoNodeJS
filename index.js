@@ -1,41 +1,11 @@
-const server = require('http').createServer();
-const fs = require('fs');
+const os = require('os');
 
-const routes = {
-  '/home': (res, fs) => {
-    res.writeHead(200, {
-      'Content-Type': 'text/html'
-    });
-    res.end(fs.readFileSync('./index.html'));
-  },
+// console.log(os.cpus());
 
-  '/': (res) => {
-    res.writeHead(301, {
-      'Location': '/home'
-    });
-    res.end();
-  },
-  '/api': (res) => {
-    res.writeHead(200, {
-      'Content-Type': 'aplication/json'
-    });
-    const data = { company: 'Lemoncode'};
-    res.end(JSON.stringify(data));
-  }
-};
+// console.log(os.networkInterfaces());
 
-const notFoundResponse = (res) => {
-  res.writeHead(404);
-  res.end();
-};
+// console.log(os.freemem());
 
-const routeHandler = (route) => (!!routes[route] ?
-  routes[route] : notFoundResponse
-);
+// console.log(os.type());
 
-server.on('request', (req, res) => {
-  const route = routeHandler(req.url);
-  route(res, fs);
-});
-
-server.listen(3000);
+console.log(os.userInfo());
