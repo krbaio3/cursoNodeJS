@@ -1,22 +1,27 @@
 const EventEmitter = require('events').EventEmitter;
+const fs = require('fs');
 
-class WithLog extends EventEmitter {
+class WithTime extends EventEmitter {
 
-  execute(taskFunc) {
-    console.log('Before');
-    this.emit('begin');
-    taskFunc();
-    this.emit('end');
-    console.log('after');
+  execute(asyncFun, ...args) {
+    console.time('Executed in');
+    asyncFun(...args, (error, data) => {
+      if (error) {
+        this.emit('error', error);
+        return console.timeEnd('Executed in');
+      }
+
+      this.emit('data', data);
+      console.timeEnd('Executed in');
+      this.emit('end');
+    });
   }
 }
 
+const withTime = new WithTime();
 
-const withLog =new WithLog();
+withTime.on('data', (data) => console.log(data));
+withTime.on('error', (error) => console.error(error));
+withTime.on('end', () => console.log('end'));
 
-withLog.on('begin',() =>console.log('begin'));
-withLog.on('end',() =>console.log('end'));
-
-withLog.execute(() => {
-setTimeout(() => console.log('executing'), 500);
-});
+withTime.execute(fs.readFile, __filename);
